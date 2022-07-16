@@ -5,6 +5,7 @@ const morgan = require('morgan');
 
 app.use(express.json());
 
+// use morgan middleware to log requests
 app.use(morgan('tiny'));
 
 let persons = [
