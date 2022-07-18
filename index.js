@@ -22,8 +22,11 @@ app.get('/api/persons', (req, res, next) => {
 });
 
 app.get('/info', (req, res) => {
-    res.send(`<p>Phonebook has info for ${persons.length} people</p>
-    <p>${new Date().toString()}</p>`);
+    Person.count({}, (err, count) => {
+      res.send(`<p>Phonebook has info for ${count} people</p>
+      <p>${new Date().toString()}</p>`);
+    })
+    
 });
 
 app.get('/api/persons/:id', (req, res, next) => {
