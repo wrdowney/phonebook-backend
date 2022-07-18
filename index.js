@@ -47,30 +47,30 @@ const generateId = () => {
 
 app.post('/api/persons', (req,res) => {
     const body = req.body
-    
-    // check if data is empty
-    if (!body.name || !body.number) {
-      return res.status(400).json({ 
-        error: 'name or number is missing' 
-      });
-    }
-
-    if(persons.find(person => person.name === body.name)) {
-        return res.status(400).json({
-            error: 'name must be unique'
-        });
-    }
   
     const person = new Person({
       name: body.name,
       number: body.number,
     });
   
-    persons = persons.concat(person)
-  
     person.save().then(savedPerson => {
       res.json(savedPerson);
     });
+});
+
+app.put('/api/persons/:id', (request, response, next) => {
+  const body = request.body
+  console.log(body);
+  const person = {
+    name: body.name,
+    number: body.number,
+  };
+
+  Person.findByIdAndUpdate(request.params.id, person)
+    .then(updatedPerson => {
+      response.json(updatedPerson)
+    })
+    .catch(error => next(error))
 });
 
 const errorHandler = (error, request, response, next) => {
