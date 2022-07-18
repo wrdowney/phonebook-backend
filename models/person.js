@@ -30,4 +30,4 @@ personSchema.set('toJSON', {
     }
 })
 
-module.exports = mongoode.model('Person', personSchema); // export module
+module.exports = mongoose.model('Person', personSchema); // export module
