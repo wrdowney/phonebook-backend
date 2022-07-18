@@ -67,8 +67,6 @@ const generateId = () => {
 
 app.post('/api/persons', (req,res) => {
     const body = req.body
-    console.log(req.body);
-    console.log(body);
     
     // check if data is empty
     if (!body.name || !body.number) {
@@ -83,15 +81,16 @@ app.post('/api/persons', (req,res) => {
         });
     }
   
-    const person = {
+    const person = new Person({
       name: body.name,
       number: body.number,
-      id: generateId(),
-    }
+    });
   
     persons = persons.concat(person)
   
-    res.json(person)
+    person.save().then(savedPerson => {
+      res.json(savedPerson);
+    });
 });
 
 const PORT = process.env.PORT || 3001;
